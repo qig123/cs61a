@@ -17,4 +17,10 @@ def largest_factor(x):
     return 1
 
 
-print(largest_factor(2))
+def getx():
+    while(-1):
+        print("5")
+
+
+# print(largest_factor(2))
+getx()
