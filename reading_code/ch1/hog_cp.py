@@ -71,9 +71,32 @@ def free_bacon(score):
         result = result+num
         k = k+1
         sum = sum//10
-    # print(abs(result))
     return 1+abs(result)
     # END PROBLEM 2
 
 
-print(free_bacon(45))
+def take_turn(num_rolls, opponent_score, dice=six_sided):
+    """Simulate a turn rolling NUM_ROLLS dice, which may be 0 (Free Bacon).
+    Return the points scored for the turn by the current player.
+
+    num_rolls:       The number of dice rolls that will be made.
+    opponent_score:  The total score of the opponent.
+    dice:            A function that simulates a single dice roll outcome.
+    """
+    # Leave these assert statements here; they help check for errors.
+    assert type(num_rolls) == int, 'num_rolls must be an integer.'
+    assert num_rolls >= 0, 'Cannot roll a negative number of dice in take_turn.'
+    assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
+    assert opponent_score < 100, 'The game should be over.'
+    # BEGIN PROBLEM 3
+    "*** YOUR CODE HERE ***"
+    if(num_rolls == 0):
+        return free_bacon(opponent_score)
+    else:
+        return roll_dice(num_rolls, dice)
+    # END PROBLEM 3
+
+
+# print(free_bacon(47))
+# print(take_turn(0, 47))
+print(take_turn(3, 0, make_test_dice(4, 6, 1)))
