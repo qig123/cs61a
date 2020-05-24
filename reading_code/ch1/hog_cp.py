@@ -97,6 +97,30 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     # END PROBLEM 3
 
 
+def is_swap(player_score, opponent_score):
+    """
+    Return whether the two scores should be swapped
+    """
+    # BEGIN PROBLEM 4
+    "*** YOUR CODE HERE ***"
+    sum = 3**(player_score+opponent_score)
+    k = 0
+    low = 0
+    high = 0
+    while(sum != 0):
+        if(k == 0):
+            if(sum >= 10):
+                low = sum % 10
+        k += 1
+        x = sum//10
+        if(x < 10 and x > 0):
+            high = x
+        sum = x
+    return low == high
+    # END PROBLEM 4
+
+
 # print(free_bacon(47))
 # print(take_turn(0, 47))
-print(take_turn(3, 0, make_test_dice(4, 6, 1)))
+# print(take_turn(3, 0, make_test_dice(4, 6, 1)))
+is_swap(2, 4)

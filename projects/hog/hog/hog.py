@@ -104,6 +104,20 @@ def is_swap(player_score, opponent_score):
     """
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    sum = 3**(player_score+opponent_score)
+    k = 0
+    low = 0
+    high = 0
+    while(sum != 0):
+        if(k == 0):
+            if(sum >= 10):
+                low = sum % 10
+        k += 1
+        x = sum//10
+        if(x < 10 and x > 0):
+            high = x
+        sum = x
+    return low == high
     # END PROBLEM 4
 
 
