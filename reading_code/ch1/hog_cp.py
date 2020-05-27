@@ -120,7 +120,6 @@ def is_swap(player_score, opponent_score):
     # END PROBLEM 4
 
 
-# print(free_bacon(47))
-# print(take_turn(0, 47))
-# print(take_turn(3, 0, make_test_dice(4, 6, 1)))
-is_swap(2, 4)
+t = make_test_dice(7)
+print(take_turn(4, 71, t))
+

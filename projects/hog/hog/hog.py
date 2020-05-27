@@ -158,6 +158,18 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    while(score0 < goal and score1 < goal):
+        if(who == 0):
+            s0 = strategy0(score0, score1)
+            score0 = score0+take_turn(s0, score1, dice)
+            who = 1
+        else:
+            s1 = strategy1(score1, score0)
+            score1 = score1+take_turn(s1, score0, dice)
+            who = 0
+        isswap = is_swap(score0, score1)
+        if(isswap):
+            score0, score1 = score1, score0
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
@@ -397,3 +409,15 @@ def run(*args):
 
     if args.run_experiments:
         run_experiments()
+
+
+#f = make_test_dice(2, 10, 10, 5, 5)
+#print(take_turn(1, 0, f))
+#print(take_turn(1, 2, f))
+
+#print(take_turn(1, 10, f))
+#print(take_turn(1, 12, f))
+#print(take_turn(1, 15, f))
+#print(take_turn(1, 17, f))
+#print(take_turn(1, 19, f))
+#play(always_roll(1), always_roll(1), 0, 0, f, goal=20,  feral_hogs=False)
