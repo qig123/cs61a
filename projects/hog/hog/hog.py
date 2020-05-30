@@ -175,6 +175,8 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
             isswap = is_swap(score0, score1)
             if(isswap):
                 score0, score1 = score1, score0
+            #print(score0)
+            #print(score1)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
@@ -200,7 +202,7 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
             if(isswap):
                 score0, score1 = score1, score0
         first_turn = False
-
+        say = say(score0, score1)
     # END PROBLEM 6
     return score0, score1
 
@@ -451,11 +453,45 @@ def run(*args):
 
 
 def start0(s0, s1):
-    return 2
+    return 1
 
 
 def start1(s0, s1):
     return 1
 
 
-play(start0, start1, score0=17, score1=6, dice=make_test_dice(1, 2), goal=21)
+def total(s0, s1):
+    print(s0+s1)
+    return echo
+
+
+def echo(s0, s1):
+    print(s0, s1)
+    return total
+
+
+def count(n):
+    def say(s0, s1):
+        print(n)
+        return count(n+1)
+    return say
+
+
+def echo_0(s0, s1):
+    print("*", s0)
+    return echo_0
+
+
+def echo_1(s0, s1):
+    print("**", s1)
+    return echo_1
+
+
+# def start0(score, opppnent): return 1-opppnent//10
+#play(start0, start1, score0=0, score1=0,
+    #dice=make_test_dice(2, 3), goal=15, say=echo)
+#play(start0, start1, score0=0, score1=0,
+#dice=make_test_dice(3), goal=10, say=count(1))
+
+#play(start0, start1, score0=0, score1=0,
+     #dice=make_test_dice(2), goal=3, say=both(echo_0, echo_1))
