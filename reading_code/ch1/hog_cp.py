@@ -120,6 +120,15 @@ def is_swap(player_score, opponent_score):
     # END PROBLEM 4
 
 
-t = make_test_dice(7)
-print(take_turn(4, 71, t))
+#t = make_test_dice(7)
+#print(take_turn(4, 71, t))
 
+def say():
+    return 3
+
+
+def count(n):
+    return say
+
+
+f = count(1)
