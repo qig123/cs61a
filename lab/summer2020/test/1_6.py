@@ -1,33 +1,20 @@
 def square(x):
-    return x * x
-
-
-def sum_naturals(n):
-    total, k = 0, 1
-    while k <= n:
-        total, k = total + k, k+1
-    return total
-
-
-def sum_cubes(n):
-    total, k = 0, 1
-    while k <= n:
-        total, k = total + k * k*k, k+1
-    return total
-
-
-def pi_sum(n):
-    total, k = 0, 1
-    while k <= n:
-        total, k = total+8/((4*k-3)*(4*k-1)), k+1
-        return total
+    return x*x
 
 
 def summation(n, term):
     total, k = 0, 1
     while k <= n:
         total, k = total+term(k), k+1
-        return total
+    return total
+
+
+def cube(x):
+    return x*x*x
+
+
+def sum_cubes(n):
+    return summation(n, cube)
 
 
 def improve(update, close, guess=1):
@@ -48,7 +35,14 @@ def approx_eq(x, y, tolerance=1e-15):
     return abs(x-y) < tolerance
 
 
-print(improve(golden_update, square_close_to_successor))
+def average(x, y):
+    return (x+y)/2
 
 
-# print(square(5))
+def sqrt(a):
+    def sqrt_update(x):
+        return average(x, a/x)
+
+    def sqrt_close(x):
+        return approx_eq(x*x, a)
+    return improve(sqrt_update, sqrt_close)
