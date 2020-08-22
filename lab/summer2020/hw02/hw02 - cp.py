@@ -66,7 +66,8 @@ def accumulate(combiner, base, n, term):
     "*** YOUR CODE HERE ***"
     total, k = base, 1
     while k <= n:
-        total, k = combiner(total, term(k)), k+1
+        total = combiner(total, term(k))
+        k = k+1
     return total
 
 
@@ -124,11 +125,32 @@ def make_repeater(func, n):
     625
     >>> make_repeater(square, 4)(5) # square(square(square(square(5))))
     152587890625
-    >>> make_repeater(square, 0)(5) # Yes, it makes sense to apply the function zero times!
+    # Yes, it makes sense to apply the function zero times!
+    >>> make_repeater(square, 0)(5)
     5
     """
     "*** YOUR CODE HERE ***"
-    return accumulate(func, (lambda x: x), n, compose1(func, func))
+#    return accumulate(func, (lambda x: x), n, compose1(func, func))
+    if n == 0:
+        return (lambda x: x)
+    elif n == 1:
+        return func
+    else:
+        k = 1
+        total_f = func
+        while k < n:
+            total_f = compose1(func, total_f)
+            k += 1
+        return total_f
+
+
+def make_repeater2(func, n):
+    def init_f(n):
+        if n == 0:
+            return (lambda x: x)
+        else:
+            return func
+    return accumulate(compose1, init_f(n), n-1, (lambda x: func))
 
 
 def zero(f):
@@ -142,11 +164,18 @@ def successor(n):
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    # successor(zero)= lambda f: lambda x: f(zero(f)(x))
+    # zero(f)=(lambda x:x)
+    # zero(f)(x)=x
+    return lambda f: lambda x: f(x)
 
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
     "*** YOUR CODE HERE ***"
+    # one(f)=  lambda f: lambda x:f(x)(f)=lambda x:f(x)
+    # successor(one)= lambda f: lambda x: f(lambda x:f(x)(x))=lambda f: lambda x: f(f(x))
+    return lambda f: lambda x: f(f(x))
 
 
 three = successor(two)
@@ -165,6 +194,9 @@ def church_to_int(n):
     3
     """
     "*** YOUR CODE HERE ***"
+    f = n(increment)
+    g = f(increment)
+    return g(0)
 
 
 def add_church(m, n):
@@ -199,6 +231,26 @@ def pow_church(m, n):
     "*** YOUR CODE HERE ***"
 
 
-f = make_repeater((lambda x: x*x), 2)
-print(f(5))
+def four(f):
+    """Church numeral 1: same as successor(zero)"""
+    "*** YOUR CODE HERE ***"
+    # successor(zero)= lambda f: lambda x: f(zero(f)(x))
+    # zero(f)=(lambda x:x)
+    # zero(f)(x)=x
+    return lambda f: lambda x: f(f(f(f(x))))
 
+
+# f = make_repeater2((lambda x: x*x), 0)
+# print(f(5))
+# add_three = make_repeater2(increment, 3)
+# print(add_three(5))
+# lambda f: lambda x: f(x) ---f=(lambda x: x)
+# print(zero(identity)(1))
+# f = one(identity)      lambda f: lambda x: f(x)= lambda x: x
+# f = four(increment)
+# print(f)
+# g = f(increment)
+# print(g(0))
+print(church_to_int(four))
+# lambda f: lambda x: f(x)
+# print(g)
