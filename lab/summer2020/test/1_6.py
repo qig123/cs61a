@@ -46,3 +46,27 @@ def sqrt(a):
     def sqrt_close(x):
         return approx_eq(x*x, a)
     return improve(sqrt_update, sqrt_close)
+
+
+def curried_pow(x):
+    def h(y):
+        return pow(x, y)
+    return h
+
+
+def curried_pow_lambda(x):
+    return lambda y: pow(x, y)
+
+
+# print(curried_pow_lambda(2)(3))
+# print((lambda x: lambda y: pow(x, y))(2)(3))
+
+
+def compose1(f, g):
+    def h(x):
+        return f(g(x))
+    return h
+
+
+f = compose1(lambda x: x+2, lambda x: x*x)
+print(f(5))

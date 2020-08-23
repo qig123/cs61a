@@ -164,10 +164,9 @@ def successor(n):
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    # f1=(lambda n:lambda f:lambda x: f(n(f)(x)) )(n)  n=zero
     # successor(zero)= lambda f: lambda x: f(zero(f)(x))
-    # zero(f)=(lambda x:x)
-    # zero(f)(x)=x
-    return lambda f: lambda x: f(x)
+    return lambda x: f(x)
 
 
 def two(f):
@@ -175,7 +174,7 @@ def two(f):
     "*** YOUR CODE HERE ***"
     # one(f)=  lambda f: lambda x:f(x)(f)=lambda x:f(x)
     # successor(one)= lambda f: lambda x: f(lambda x:f(x)(x))=lambda f: lambda x: f(f(x))
-    return lambda f: lambda x: f(f(x))
+    return lambda x: f(f(x))
 
 
 three = successor(two)
@@ -194,9 +193,7 @@ def church_to_int(n):
     3
     """
     "*** YOUR CODE HERE ***"
-    f = n(increment)
-    g = f(increment)
-    return g(0)
+    return n(increment)(0)
 
 
 def add_church(m, n):
@@ -206,6 +203,13 @@ def add_church(m, n):
     5
     """
     "*** YOUR CODE HERE ***"
+    k = 0
+    n_int = church_to_int(n)
+    while k < n_int:
+        f = successor(m)
+        m = f
+        k += 1
+    return m
 
 
 def mul_church(m, n):
@@ -218,6 +222,13 @@ def mul_church(m, n):
     12
     """
     "*** YOUR CODE HERE ***"
+    k = 0
+    n_int = church_to_int(n)
+    sum = zero
+    while k < n_int:
+        sum = add_church(sum, m)
+        k += 1
+    return sum
 
 
 def pow_church(m, n):
@@ -229,6 +240,13 @@ def pow_church(m, n):
     9
     """
     "*** YOUR CODE HERE ***"
+    k = 0
+    n_int = church_to_int(n)
+    sum = one
+    while k < n_int:
+        sum = mul_church(sum, m)
+        k += 1
+    return sum
 
 
 def four(f):
@@ -237,7 +255,7 @@ def four(f):
     # successor(zero)= lambda f: lambda x: f(zero(f)(x))
     # zero(f)=(lambda x:x)
     # zero(f)(x)=x
-    return lambda f: lambda x: f(f(f(f(x))))
+    return lambda x: f(f(f(f(x))))
 
 
 # f = make_repeater2((lambda x: x*x), 0)
@@ -251,6 +269,7 @@ def four(f):
 # print(f)
 # g = f(increment)
 # print(g(0))
-print(church_to_int(four))
-# lambda f: lambda x: f(x)
-# print(g)
+# print(church_to_int(successor(successor(successor(two)))))
+# print(church_to_int(add_church(two, three)))
+# print(church_to_int(mul_church(three, four)))
+# print(church_to_int(pow_church(three, two)))
